@@ -1,0 +1,213 @@
+{
+	"info": {
+		"_postman_id": "92d660ca-6971-488c-9d32-21ef1b014dab",
+		"name": "EmployeeApis",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "GetAllEmployees",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "5a2f23d9-8777-472f-95e6-554afd3c9ad2",
+						"exec": [
+							"pm.test(\"Status Code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"validate multiple fields\", function () {\r",
+							"    //parse jason body\r",
+							"    var parsedResponse = pm.response.json();\r",
+							"    //validationg different fields\r",
+							"    pm.expect(parsedResponse.data[1].id).to.eql(2);\r",
+							"    pm.expect(parsedResponse.data[1].employee_name).to.eql(\"Garrett Winters\");\r",
+							"    pm.expect(parsedResponse.data[1].employee_age).to.eql(63);\r",
+							"});\r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/api/v1/employees",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"employees"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetSingleEmployee",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "7bb89bf9-1037-4703-b8e5-7c82d4bbdcc0",
+						"exec": [
+							"tests[\"Status Code\"] = responseCode.code == 200;\r",
+							"var response = JSON.parse(responseBody);\r",
+							"tests[\"Status\"] = response.status == \"success\";\r",
+							"tests[\"ID No\"] =  response.data.id == 21;\r",
+							"tests[\"Employee Name\"] = response.data.employee_name == \"Jenette Caldwell\"; "
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/api/v1/employee/{{employeeID}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"employee",
+						"{{employeeID}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CreateEmployee",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "275f3192-61df-41de-80c4-56508c5e758e",
+						"exec": [
+							"tests[\"Status Code\"] =  responseCode.code === 200;\r",
+							"var response = JSON.parse(responseBody);\r",
+							"tests[\"status message\"] = response.status == \"success\";\r",
+							"tests[\"Verify Name\"] =  response.data.employee_name == \"Dilara Dolkun\";"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {}
+			},
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n \"employee_name\":\"Dilara Dolkun\",\r\n \"employee_salary\": \"80000\" ,\r\n \"age\": \"25\" \r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/v1/create",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "UpdateEmployeeRecord",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "a5ebb141-ddc6-4b0a-900b-9a6c8e81bcf5",
+						"exec": [
+							"pm.test(\"Status Code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n   \r\n        \"employee_name\": \"Dai Rios\",\r\n        \"employee_salary\": 20000,\r\n        \"employee_age\": 31   \r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/v1/update/{{employeeID}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"update",
+						"{{employeeID}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DeleteEmployee",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "3cd1913e-1b08-4931-b563-ae824bcf0c3e",
+						"exec": [
+							"tests[\"Status Code\"] =  responseCode.code == 200;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/api/v1/delete/{{employeeID}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"delete",
+						"{{employeeID}}"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
